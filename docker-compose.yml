@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app:
+    image: 'm4/demo-tata:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - keycloak
+    ports:
+      - 8090:8080
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:12.0.2
+    container_name: keycloak
+    ports:
+      - 8080:8080
+      - 8443:8443
+    restart: unless-stopped
+    environment:
+      # Credentials for admin account
+      # -----------------------------
+      KEYCLOAK_USER: "admin"
+      KEYCLOAK_PASSWORD: "admin"
