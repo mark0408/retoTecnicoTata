@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "15f57511-bb73-40de-92e6-00278598f97f",
+		"name": "Reto-Tenico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un valor de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJCQzFHbDNORlhoZFh0MWZELTl3bkVHM2NJYVhYbWIwcFNwbmJ2SzNjS3pJIn0.eyJleHAiOjE2NDc1MDQ5MTksImlhdCI6MTY0NzUwNDYxOSwianRpIjoiMWNhNmEyNWQtODRkMC00Y2JkLThjZTktZDg4MTEwMjkzNDgwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL2RlbW8iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMWM2MWIyNjUtNmFmNy00YmMwLTg2NzgtMzA0MTMxNWMwZGUyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidG9rZW4tcG9zdG1hbiIsInNlc3Npb25fc3RhdGUiOiJhYzM3NGU3My1hYjUyLTQyZTQtYmMxZC1mZWIyYjg2OTc2Y2MiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.RV_J67mY6jyw8er20-atT9DEnbTCkOK7ramJS_6XrfFq-ItV_rTbXYzZQFMDy9bk65-G1a0lZTWY2xJL7xQOQILs98HFrbnQNlOOVrPdAVj2X39tWVM8aiGDabpfxLFj680XP3O0Zss-0Oc5u550gg0nOVthsSKf1La2aCNYSeCMTRw2MLDHlQ4s_l3wYZ1J6X6_Qmx0H1m4uoL9AlpJ4BtULh0W4698pevhgVrarQj4SKAyYmu1f0WaD5RAuu3XsCTBGqZSdIg7h_GZEEUj7AU5ko2TM7dkHwDucw6ZHGB1NM6YUXeUd8fsdAoYaRbuyt7nOJne580e2_vp4jyXqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":null,\r\n    \"tipoCambio\":\"dolarAsol\",\r\n    \"valorTipoCambio\":3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/cambioMoneda/crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"cambioMoneda",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un monto con cambio de moneda",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJJYURWLXFIQnFHMHo3NTFHdlhNVkQ5WXRvOWVBX0U5T0JxaWVPcHZEWXRvIn0.eyJleHAiOjE2NDc0OTE4NjIsImlhdCI6MTY0NzQ5MTU2MiwianRpIjoiOGVkNGYxZGItZjdlYS00YTVlLWI4MTMtZDZhNTRjYTdhZmU3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL2RlbW8iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNGE4ZmM0MWYtYTcxMi00YjgyLWE5MTEtNDgzNDNmNTEyNGY4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidG9rZW4tcG9zdG1hbiIsInNlc3Npb25fc3RhdGUiOiI2NDhjODI0NC03MDE0LTQwNmQtODdlMS1jMGJhNjk1YTNjMGQiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.fkPjke77yLG7HU_Hu2PzgUiAsXFWrT96Xfyuqk-BCe4EXy3hyfAV-E-Psum0dKVzDFRRM0tuzqzlU7a5pUKSvoT5egAxlxfk7fqMpbbGhtXv7nSqpcvBjD-D5-TTr4abfk8Q5E77d37AFKET-fuSFs0D-w6TLE3pcTzMIMkjJs8QUcCMUPqfZBAJX0xPFAdDIuEMVe3gG46zWVURrrv2Rqq-W7YQ1t8VU5pvyASekHEsVSSiWcrosfMl3_8vYia6odqKYiKTzQvuwJPXC5wAfWiZqrdLUURq7VKKjwbR1HKfKkpJNTcV5P9X3GHKUAxBc7byT6DEmIUHOP1WgP-hMA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monedaOrigen\":\"dolar\",\r\n    \"monedaDestino\":\"sol\",\r\n    \"monto\":100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/cambioMoneda/cambiar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"cambioMoneda",
+						"cambiar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un valor de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJJYURWLXFIQnFHMHo3NTFHdlhNVkQ5WXRvOWVBX0U5T0JxaWVPcHZEWXRvIn0.eyJleHAiOjE2NDc0OTE1MzMsImlhdCI6MTY0NzQ5MTIzMywianRpIjoiNTkyOTk5ZTUtYjAyYi00MTY0LWI1NjUtYzY0MDBhZDZmNjQxIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2F1dGgvcmVhbG1zL2RlbW8iLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNGE4ZmM0MWYtYTcxMi00YjgyLWE5MTEtNDgzNDNmNTEyNGY4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoidG9rZW4tcG9zdG1hbiIsInNlc3Npb25fc3RhdGUiOiIxYjQ4ZWRhOS1hY2FkLTQ4ODgtOTAxMi1kZDljMDk3NWEzMTIiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiYWRtaW4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20ifQ.KUP0f27avJdFjO4Wpkco8v5MVai5W5jRIlm0g6mx5MfTWB1gy0z7FgS2OzDSSmQdMfY7dON211E9-_liMa44TYlPKFlvMO4WcOoiox_KSR4mxxJz82iHeVjZN7cC1h2Tgi2XbD-gar7AQ9wtnP_sNI6ahG1MELAw16nG2dUAe3ncukY6yCCDcf-VV3WH5qd3435zOOH44aS2D59rY0fi7eqf7pn5-H4jq64GZmp40QCBnGDxFse_zkjyfoI_cXsPhUaGwnWOvO9klDiZWDt2SXTPCWuYTkOCK2TjOi5fpWQ0GQqEW3mgR2TfkEqg53-xcK6qHtVRia3csdFWi2sCMA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"tipoCambio\":\"dolarAsol\",\r\n    \"valorTipoCambio\":3.5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/cambioMoneda/actualizar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"cambioMoneda",
+						"actualizar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL-TOKEN",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "token-postman",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "edd63aeb-cbfd-4163-af30-25b111021f63",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "openid",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/realms/demo/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"realms",
+						"demo",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

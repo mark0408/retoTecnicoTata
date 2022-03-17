@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ public class CambioMonedaController {
   @Autowired
   CambioMonedaService cambioMonedaService;
 
+  @PreAuthorize("hasRole('admin')")
   @PostMapping(value = "/cambiar", produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiResponses(value = {
           @ApiResponse(responseCode = "200", description = "Respuesta Correcta",
@@ -40,7 +42,7 @@ public class CambioMonedaController {
   public ResponseEntity<CambioMonedaResponse> obtenerResultadoCambioMoneda(@Valid @RequestBody CambioMonedaRequest request){
     return ResponseEntity.ok(cambioMonedaService.obtenerResultadoCambioMoneda(request));
   }
-
+  @PreAuthorize("hasRole('admin')")
   @PostMapping(value = "/crear", produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiResponses(value = {
           @ApiResponse(responseCode = "200", description = "Respuesta Correcta",
@@ -50,6 +52,7 @@ public class CambioMonedaController {
   public ResponseEntity<CambioMonedaCrearDTO> crearCambioMoneda(@Valid @RequestBody CambioMonedaCrearDTO request){
     return ResponseEntity.ok(cambioMonedaService.crearCambioMoneda(request));
   }
+  @PreAuthorize("hasRole('admin')")
   @PutMapping(value = "/actualizar", produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiResponses(value = {
           @ApiResponse(responseCode = "200", description = "Respuesta Correcta",

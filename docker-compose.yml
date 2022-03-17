@@ -1,18 +1,24 @@
-version: '3'
+version: '3.6'
 
 services:
   app:
     image: 'm4/demo-tata:latest'
+    networks:
+      - gateway
     build:
       context: .
     container_name: app
     depends_on:
       - keycloak
+    environment:
+      KEYCLOAK_SERVER_URL: keycloak
     ports:
       - 8090:8080
 
   keycloak:
     image: quay.io/keycloak/keycloak:12.0.2
+    networks:
+      - gateway
     container_name: keycloak
     ports:
       - 8080:8080
@@ -23,3 +29,6 @@ services:
       # -----------------------------
       KEYCLOAK_USER: "admin"
       KEYCLOAK_PASSWORD: "admin"
+
+networks:
+  gateway: {}
