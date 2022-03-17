@@ -16,6 +16,6 @@ public class CambioMonedaCrearDTO implements Serializable {
     private Long id;
     private String tipoCambio;
     private Double valorTipoCambio;
-
+    private String nombre;
 
 }

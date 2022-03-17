@@ -19,5 +19,5 @@ public class CambioMonedaResponse implements Serializable {
   private String monedaOrigen;
   private String monedaDestino;
   private String tipoCambio;
-  //private Double valorTipoCambio;
+  private String nombre;
 }

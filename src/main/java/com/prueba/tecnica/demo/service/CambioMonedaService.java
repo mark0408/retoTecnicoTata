@@ -9,6 +9,7 @@ import com.prueba.tecnica.demo.repository.CambioMonedaRepository;
 import com.prueba.tecnica.demo.util.CambioUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ import java.util.Optional;
 @Transactional
 public class CambioMonedaService {
 
+  @Value("${contante.nombre}")
+  private String constanteNombre;
+
   @Autowired
   CambioMonedaRepository cambioMonedaRepository;
 
@@ -30,7 +34,7 @@ public class CambioMonedaService {
     Optional<CambioMonedaDomain> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(tipoCambio);
     if(optionalCambioMoneda.isPresent()){
       Double valorTipoCambio = optionalCambioMoneda.get().getValorTipoCambio();
-      Double montoFinal = obtenerMontoFinal(valorTipoCambio,request.getMonto());
+      Double montoFinal = calcularMontoFinal(valorTipoCambio,request.getMonto());
       response = crearCambioMonedaResponse(request,montoFinal,tipoCambio);
     }else{
       log.error("Error no se encuentra cambio de Moneda");
@@ -38,7 +42,7 @@ public class CambioMonedaService {
     log.info("Salio del metodo obtenerLineaMovilYOfertaPorCliente");
     return response;
   }
-  private Double obtenerMontoFinal(Double valorTipoCambio, Double montoInicial){
+  private Double calcularMontoFinal(Double valorTipoCambio, Double montoInicial){
       return valorTipoCambio*montoInicial;
   }
   private CambioMonedaResponse crearCambioMonedaResponse(CambioMonedaRequest cambioMonedaRequest,Double montoFinal, String tipoCambio){
@@ -48,6 +52,7 @@ public class CambioMonedaService {
     response.setMonedaOrigen(cambioMonedaRequest.getMonedaOrigen());
     response.setMonedaDestino(cambioMonedaRequest.getMonedaDestino());
     response.setTipoCambio(tipoCambio);
+    response.setNombre(constanteNombre);
     return response;
   }
 
@@ -81,7 +86,7 @@ public class CambioMonedaService {
     return response;
   }
   private CambioMonedaCrearDTO cambioMonedaToCambioMonedaCrear(CambioMonedaDomain cambioMonedaDomain){
-    return new CambioMonedaCrearDTO(cambioMonedaDomain.getId(), cambioMonedaDomain.getTipoCambio(), cambioMonedaDomain.getValorTipoCambio());
+    return new CambioMonedaCrearDTO(cambioMonedaDomain.getId(), cambioMonedaDomain.getTipoCambio(), cambioMonedaDomain.getValorTipoCambio(),constanteNombre);
   }
   private CambioMonedaDomain cambioMonedaCrearToCambioMoneda(CambioMonedaCrearDTO cambioMoneda){
     return new CambioMonedaDomain(null,cambioMoneda.getTipoCambio(), cambioMoneda.getValorTipoCambio());
