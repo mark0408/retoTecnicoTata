@@ -1,17 +1,20 @@
 package com.prueba.tecnica.demo.service;
 
 
-import com.prueba.tecnica.demo.domain.CambioMonedaDomain;
+import com.prueba.tecnica.demo.domain.CambioMoneda;
+import com.prueba.tecnica.demo.domain.Moneda;
 import com.prueba.tecnica.demo.dto.CambioMonedaCrearDTO;
 import com.prueba.tecnica.demo.dto.CambioMonedaRequest;
 import com.prueba.tecnica.demo.dto.CambioMonedaResponse;
 import com.prueba.tecnica.demo.repository.CambioMonedaRepository;
+import com.prueba.tecnica.demo.repository.MonedaRepository;
 import com.prueba.tecnica.demo.util.CambioUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,12 +25,14 @@ public class CambioMonedaService {
 
   @Autowired
   CambioMonedaRepository cambioMonedaRepository;
+  @Autowired
+  MonedaRepository monedaRepository;
 
   public CambioMonedaResponse obtenerResultadoCambioMoneda(CambioMonedaRequest request){
     log.info("Entro al metodo obtenerResultadoCambioMoneda");
     CambioMonedaResponse response = new CambioMonedaResponse();
     String tipoCambio = CambioUtils.crearTipoCambio(request.getMonedaOrigen(),request.getMonedaDestino());
-    Optional<CambioMonedaDomain> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(tipoCambio);
+    Optional<CambioMoneda> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(tipoCambio);
     if(optionalCambioMoneda.isPresent()){
       Double valorTipoCambio = optionalCambioMoneda.get().getValorTipoCambio();
       Double montoFinal = obtenerMontoFinal(valorTipoCambio,request.getMonto());
@@ -53,37 +58,50 @@ public class CambioMonedaService {
 
   public CambioMonedaCrearDTO crearCambioMoneda(CambioMonedaCrearDTO request){
     CambioMonedaCrearDTO response = new CambioMonedaCrearDTO();
-    CambioMonedaDomain cambioMonedaDomain = new CambioMonedaDomain();
-    Optional<CambioMonedaDomain> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(request.getTipoCambio());
+    CambioMoneda cambiomoneda = new CambioMoneda();
+    validarRequest(request);
+    Optional<CambioMoneda> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(request.getTipoCambio());
     if(optionalCambioMoneda.isPresent()){
       log.error("Ya existe un valor para ese tipo de cambio");
     }else{
-      //Crear
-      cambioMonedaDomain = cambioMonedaCrearToCambioMoneda(request);
+      cambiomoneda = cambioMonedaCrearToCambioMoneda(request);
     }
-    cambioMonedaDomain = cambioMonedaRepository.saveAndFlush(cambioMonedaDomain);
-    response = cambioMonedaToCambioMonedaCrear(cambioMonedaDomain);
+    cambiomoneda = cambioMonedaRepository.saveAndFlush(cambiomoneda);
+    response = cambioMonedaToCambioMonedaCrear(cambiomoneda);
     return response;
   }
   public CambioMonedaCrearDTO actualizarCambioMoneda(CambioMonedaCrearDTO request){
     CambioMonedaCrearDTO response = new CambioMonedaCrearDTO();
-    CambioMonedaDomain cambioMonedaDomain = new CambioMonedaDomain();
-    Optional<CambioMonedaDomain> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(request.getTipoCambio());
+    CambioMoneda cambiomoneda = new CambioMoneda();
+    validarRequest(request);
+    Optional<CambioMoneda> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(request.getTipoCambio());
     if(optionalCambioMoneda.isPresent()){
       //Actualizar
-      cambioMonedaDomain = optionalCambioMoneda.get();
-      cambioMonedaDomain.setValorTipoCambio(request.getValorTipoCambio());
+      cambiomoneda = optionalCambioMoneda.get();
+      cambiomoneda.setValorTipoCambio(request.getValorTipoCambio());
     }else{
       log.error("El valor del tipo de cambio no se encuentra en la bd");
     }
-    cambioMonedaDomain = cambioMonedaRepository.saveAndFlush(cambioMonedaDomain);
-    response = cambioMonedaToCambioMonedaCrear(cambioMonedaDomain);
+    cambiomoneda = cambioMonedaRepository.saveAndFlush(cambiomoneda);
+    response = cambioMonedaToCambioMonedaCrear(cambiomoneda);
     return response;
   }
-  private CambioMonedaCrearDTO cambioMonedaToCambioMonedaCrear(CambioMonedaDomain cambioMonedaDomain){
-    return new CambioMonedaCrearDTO(cambioMonedaDomain.getId(), cambioMonedaDomain.getTipoCambio(), cambioMonedaDomain.getValorTipoCambio());
+  private void validarRequest(CambioMonedaCrearDTO request){
+    // Valida que moneda sea valida
+    String[] monedasRequest = request.getTipoCambio().split("A");
+    List<Moneda>monedasValidas = monedaRepository.findByMonedaIn(monedasRequest);
+    if(monedasValidas.isEmpty()){lanzarError();}
+    //Valida casos 'euroAeuro'
+    if(CambioUtils.validarMonedaRepetida(monedasRequest)){lanzarError();}
   }
-  private CambioMonedaDomain cambioMonedaCrearToCambioMoneda(CambioMonedaCrearDTO cambioMoneda){
-    return new CambioMonedaDomain(null,cambioMoneda.getTipoCambio(), cambioMoneda.getValorTipoCambio());
+  private CambioMonedaCrearDTO cambioMonedaToCambioMonedaCrear(CambioMoneda cambiomoneda){
+    return new CambioMonedaCrearDTO(cambiomoneda.getId(), cambiomoneda.getTipoCambio(), cambiomoneda.getValorTipoCambio());
+  }
+  private CambioMoneda cambioMonedaCrearToCambioMoneda(CambioMonedaCrearDTO cambioMoneda){
+    return new CambioMoneda(null,cambioMoneda.getTipoCambio(), cambioMoneda.getValorTipoCambio());
+  }
+
+  private void lanzarError(){
+
   }
 }
