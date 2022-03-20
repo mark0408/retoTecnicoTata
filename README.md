@@ -1,3 +1,3 @@
 # retoTecnicoTata
 
-Esta version no tiene ni keycloak ni jwt, pero si la logica
+Esta version jwt , la logica y control de excepciones
