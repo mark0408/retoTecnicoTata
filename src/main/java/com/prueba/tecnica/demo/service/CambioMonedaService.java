@@ -56,6 +56,7 @@ public class CambioMonedaService {
     response.setMonedaOrigen(cambioMonedaRequest.getMonedaOrigen());
     response.setMonedaDestino(cambioMonedaRequest.getMonedaDestino());
     response.setTipoCambio(tipoCambio);
+    response.setNombre("Marko Espejo");
     return response;
   }
 
@@ -108,7 +109,7 @@ public class CambioMonedaService {
     return response;
   }
   private CambioMonedaCrearDTO cambioMonedaToCambioMonedaCrear(CambioMoneda cambiomoneda){
-    return new CambioMonedaCrearDTO(cambiomoneda.getId(), cambiomoneda.getTipoCambio(), cambiomoneda.getValorTipoCambio());
+    return new CambioMonedaCrearDTO(cambiomoneda.getId(), cambiomoneda.getTipoCambio(), cambiomoneda.getValorTipoCambio(), "Marko Espejo");
   }
   private CambioMoneda cambioMonedaCrearToCambioMoneda(CambioMonedaCrearDTO cambioMoneda){
     return new CambioMoneda(null,cambioMoneda.getTipoCambio(), cambioMoneda.getValorTipoCambio());
