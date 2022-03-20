@@ -8,4 +8,8 @@ public class CambioUtils {
     return monedaOrigen+"A"+monedaDestino;
   }
 
+  public static boolean validarMonedaRepetida(String[] monedas){
+    return monedas[0].equals(monedas[1]);
+  }
+
 }
