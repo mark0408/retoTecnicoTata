@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface MonedaRepository extends JpaRepository<Moneda, Long> {
   List<Moneda> findByMonedaIn(String[] monedas);
+  Optional<Moneda> findByMoneda(String moneda);
 }

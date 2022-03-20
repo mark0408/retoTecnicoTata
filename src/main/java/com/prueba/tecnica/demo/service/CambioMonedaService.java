@@ -6,6 +6,7 @@ import com.prueba.tecnica.demo.domain.Moneda;
 import com.prueba.tecnica.demo.dto.CambioMonedaCrearDTO;
 import com.prueba.tecnica.demo.dto.CambioMonedaRequest;
 import com.prueba.tecnica.demo.dto.CambioMonedaResponse;
+import com.prueba.tecnica.demo.exception.ValidationException;
 import com.prueba.tecnica.demo.repository.CambioMonedaRepository;
 import com.prueba.tecnica.demo.repository.MonedaRepository;
 import com.prueba.tecnica.demo.util.CambioUtils;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +41,7 @@ public class CambioMonedaService {
       response = crearCambioMonedaResponse(request,montoFinal,tipoCambio);
     }else{
       log.error("Error no se encuentra cambio de Moneda");
+      lanzarError("M-401","Error no se encuentra cambio de Moneda");
     }
     log.info("Salio del metodo obtenerLineaMovilYOfertaPorCliente");
     return response;
@@ -63,6 +66,7 @@ public class CambioMonedaService {
     Optional<CambioMoneda> optionalCambioMoneda = cambioMonedaRepository.findByTipoCambio(request.getTipoCambio());
     if(optionalCambioMoneda.isPresent()){
       log.error("Ya existe un valor para ese tipo de cambio");
+      lanzarError("M-402","Ya existe un valor para ese tipo de cambio");
     }else{
       cambiomoneda = cambioMonedaCrearToCambioMoneda(request);
     }
@@ -81,6 +85,7 @@ public class CambioMonedaService {
       cambiomoneda.setValorTipoCambio(request.getValorTipoCambio());
     }else{
       log.error("El valor del tipo de cambio no se encuentra en la bd");
+      lanzarError("M-403","El valor del tipo de cambio no se encuentra en la bd");
     }
     cambiomoneda = cambioMonedaRepository.saveAndFlush(cambiomoneda);
     response = cambioMonedaToCambioMonedaCrear(cambiomoneda);
@@ -89,10 +94,18 @@ public class CambioMonedaService {
   private void validarRequest(CambioMonedaCrearDTO request){
     // Valida que moneda sea valida
     String[] monedasRequest = request.getTipoCambio().split("A");
-    List<Moneda>monedasValidas = monedaRepository.findByMonedaIn(monedasRequest);
-    if(monedasValidas.isEmpty()){lanzarError();}
+    List<Moneda>monedasValidas = validarMonedasDeTipoCambio(monedasRequest[0],monedasRequest[1]);
+    if(monedasValidas.isEmpty()){lanzarError("M-404","Moneda origen y/o moneda destino no validas");}
     //Valida casos 'euroAeuro'
-    if(CambioUtils.validarMonedaRepetida(monedasRequest)){lanzarError();}
+    if(CambioUtils.validarMonedaRepetida(monedasRequest)){lanzarError("M-405","Moneda origen y monedas destino son iguales");}
+  }
+  private List<Moneda>validarMonedasDeTipoCambio(String monedaOrigen, String monedaDestino){
+    List<Moneda> response = new ArrayList<>();
+    Optional<Moneda> optionalMonedaOrigen = monedaRepository.findByMoneda(monedaOrigen);
+    Optional<Moneda> optionalMonedaDestino = monedaRepository.findByMoneda(monedaDestino);
+    if(optionalMonedaOrigen.isPresent() && optionalMonedaDestino.isPresent())
+    {response.add(new Moneda());}
+    return response;
   }
   private CambioMonedaCrearDTO cambioMonedaToCambioMonedaCrear(CambioMoneda cambiomoneda){
     return new CambioMonedaCrearDTO(cambiomoneda.getId(), cambiomoneda.getTipoCambio(), cambiomoneda.getValorTipoCambio());
@@ -101,7 +114,7 @@ public class CambioMonedaService {
     return new CambioMoneda(null,cambioMoneda.getTipoCambio(), cambioMoneda.getValorTipoCambio());
   }
 
-  private void lanzarError(){
-
+  private void lanzarError(String code,String errorMessage){
+    throw new ValidationException(code,errorMessage);
   }
 }
