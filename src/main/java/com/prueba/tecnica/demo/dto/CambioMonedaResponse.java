@@ -18,6 +18,6 @@ public class CambioMonedaResponse implements Serializable {
   private Double montoCambiado;
   private String monedaOrigen;
   private String monedaDestino;
-  private String tipoCambio;
+  private Double valorTipoCambio;
   private String nombre;
 }

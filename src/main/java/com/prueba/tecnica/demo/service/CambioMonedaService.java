@@ -38,7 +38,7 @@ public class CambioMonedaService {
     if(optionalCambioMoneda.isPresent()){
       Double valorTipoCambio = optionalCambioMoneda.get().getValorTipoCambio();
       Double montoFinal = obtenerMontoFinal(valorTipoCambio,request.getMonto());
-      response = crearCambioMonedaResponse(request,montoFinal,tipoCambio);
+      response = crearCambioMonedaResponse(request,montoFinal,valorTipoCambio);
     }else{
       log.error("Error no se encuentra cambio de Moneda");
       lanzarError("M-401","Error no se encuentra cambio de Moneda");
@@ -49,13 +49,13 @@ public class CambioMonedaService {
   private Double obtenerMontoFinal(Double valorTipoCambio, Double montoInicial){
       return valorTipoCambio*montoInicial;
   }
-  private CambioMonedaResponse crearCambioMonedaResponse(CambioMonedaRequest cambioMonedaRequest,Double montoFinal, String tipoCambio){
+  private CambioMonedaResponse crearCambioMonedaResponse(CambioMonedaRequest cambioMonedaRequest,Double montoFinal, double valorTipoCambio){
     CambioMonedaResponse response = new CambioMonedaResponse();
     response.setMonto(cambioMonedaRequest.getMonto());
     response.setMontoCambiado(montoFinal);
     response.setMonedaOrigen(cambioMonedaRequest.getMonedaOrigen());
     response.setMonedaDestino(cambioMonedaRequest.getMonedaDestino());
-    response.setTipoCambio(tipoCambio);
+    response.setValorTipoCambio(valorTipoCambio);
     response.setNombre("Marko Espejo");
     return response;
   }
