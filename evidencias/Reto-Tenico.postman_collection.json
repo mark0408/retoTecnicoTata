@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "15f57511-bb73-40de-92e6-00278598f97f",
+		"name": "Reto-Tenico",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un valor de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0Nzc1MjY5NiwiZXhwIjoxNjQ3Nzg4Njk2fQ._5a5PYqmI55BmE9_CPgdgqYhCWqdzhJXSi7qqpCt7-4mrfqrT-N-vN-prP1gYyWBpZ29grxik-WdVcsxJJnDHg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":null,\r\n    \"tipoCambio\":\"euroAsolx\",\r\n    \"valorTipoCambio\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/cambioMoneda/crear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"cambioMoneda",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un monto con cambio de moneda",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0Nzc1MjY5NiwiZXhwIjoxNjQ3Nzg4Njk2fQ._5a5PYqmI55BmE9_CPgdgqYhCWqdzhJXSi7qqpCt7-4mrfqrT-N-vN-prP1gYyWBpZ29grxik-WdVcsxJJnDHg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"monedaOrigen\":\"dolar\",\r\n    \"monedaDestino\":\"sol\",\r\n    \"monto\":50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/cambioMoneda/cambiar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"cambioMoneda",
+						"cambiar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un valor de cambio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY0Nzc1MjY5NiwiZXhwIjoxNjQ3Nzg4Njk2fQ._5a5PYqmI55BmE9_CPgdgqYhCWqdzhJXSi7qqpCt7-4mrfqrT-N-vN-prP1gYyWBpZ29grxik-WdVcsxJJnDHg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"tipoCambio\":\"dolarAsol\",\r\n    \"valorTipoCambio\":4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/cambioMoneda/actualizar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"cambioMoneda",
+						"actualizar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL-TOKEN",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombreUsuario\":\"admin\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
